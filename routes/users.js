@@ -18,14 +18,6 @@ router.post('/mails', async function(req, res, next) {
   const emailTitle = req.body.title;
   const emailContent = req.body.content; // HTML 형식의 콘텐츠
   
-  console.log({
-    admin_email: admin_email, 
-    password: pass,
-    to: receiveEmail,
-    subject: emailTitle,
-    html: emailContent, // 'text' 대신 'html'로 변경
-  });
-
   try {
     await sendEmail({
       admin_email: admin_email, 
