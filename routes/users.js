@@ -16,17 +16,30 @@ router.post('/mails', async function(req, res, next) {
   const receiveEmail = req.body.to;
 
   const emailTitle = req.body.title;
-  const emailContent = req.body.content;
+  const emailContent = req.body.content; // HTML 형식의 콘텐츠
   
-  await sendEmail({
+  console.log({
+    admin_email: admin_email, 
+    password: pass,
+    to: receiveEmail,
+    subject: emailTitle,
+    html: emailContent, // 'text' 대신 'html'로 변경
+  });
+
+  try {
+    await sendEmail({
       admin_email: admin_email, 
       password: pass,
       to: receiveEmail,
       subject: emailTitle,
-      text: emailContent,
-  });
-  res.status(201).send({ result: 'success' });
-  // res.send('success');
+      html: emailContent, // HTML 형식의 콘텐츠를 사용
+    });
+    res.status(201).send({ result: 'success' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send({ result: 'error', message: error.message });
+  }
 });
+
 
 module.exports = router;

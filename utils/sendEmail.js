@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer'); // 이메일 전송을 위한 nodemailer 모듈 불러오기
 
 
-async function sendEmail({admin_email, password , to, subject, text }) {
+async function sendEmail({admin_email, password , to, subject, html }) {
     // 이메일 전송을 위한 메일 서버 연결
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com', // 사용할 이메일 서비스의 호스트 주소 (gamil)
@@ -13,11 +13,11 @@ async function sendEmail({admin_email, password , to, subject, text }) {
     });
 
     // 메일 옵션 설정
-    const mailOptions = {
+    let mailOptions = {
         from: admin_email,
-        to,
-        subject,
-        text,
+        to: to,
+        subject: subject,
+        html: html, // HTML 형식의 콘텐츠를 설정
     };
 
     // 이메일 전송
